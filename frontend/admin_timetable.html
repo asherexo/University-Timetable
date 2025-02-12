@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Timetable Management</title>
+    
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Admin Panel - Manage Timetable</h2>
+    
+    <!-- Add New Timetable Entry -->
+    <h2>Add Timetable Entry</h2>
+    <div>
+        <label for="timetableCourseSelect">Course:</label>
+        <select id="timetableCourseSelect" onchange="fetchSubjects()"></select>
+    </div>
+    <div>
+        <label for="subjectSelect">Subject:</label>
+        <select id="subjectSelect"></select>
+    </div>
+    <div>
+        <label for="daySelect">Day:</label>
+        <select id="daySelect" onchange="fetchAvailableClassrooms()">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+    </div>
+    <div>
+        <label for="timeSlot">Time Slot:</label>
+        <input type="text" id="timeSlot" placeholder="e.g., 10:00-12:00" onchange="fetchAvailableClassrooms()">
+    </div>
+    <div>
+        <label for="classroomSelect">Classroom:</label>
+        <select id="classroomSelect">
+            <option value="1">Classroom 1</option>
+            <option value="2">Classroom 2</option>
+            <option value="3">Classroom 3</option>
+        </select>
+    </div>
+    <button onclick="addTimetable()">Add Entry</button>
+
+    <!-- Display Timetable -->
+    <h3>Current Timetable</h3>
+    <table id="timetable" ; border="1">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Subject</th>
+                <th>Classroom</th>
+                <th>Day</th>
+                <th>Time Slot</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="timetable-data">
+            <!-- Entries will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <a href="admin.html">
+        <button>Back to Dashboard</button>
+    </a>
+    
+    <button onclick="logout()">Logout</button>
+
+    <!-- Link to JavaScript -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>

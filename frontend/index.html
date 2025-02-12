@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable | University</title>
+    
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Student Timetable</h2>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Subject</th>
+                <th>Classroom</th>
+                <th>Day</th>
+                <th>Time Slot</th>
+            </tr>
+        </thead>
+        <tbody id="timetable-data">
+            <!-- Timetable entries will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <button onclick="logout()">Logout</button>
+
+    <!-- Link to JavaScript -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>

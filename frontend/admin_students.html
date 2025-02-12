@@ -1,0 +1,48 @@
+<body>
+    <h1>Admin Panel - Manage Students</h1>
+
+    <!-- Student List -->
+    <h3>Registered Students</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Assigned Courses</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="students-data">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Assign Courses to Student -->
+    <h3>Assign Course to Student</h3>
+    <label for="studentSelect">Select Student:</label>
+    <select id="studentSelect"></select>
+
+    <label for="courseSelect">Select Course:</label>
+    <select id="courseSelect"></select>
+
+    <button onclick="assignCourses()">Assign Course</button>
+
+    <!-- Back and Logout Buttons -->
+    <br><br>
+    <a href="admin.html"><button>Back to Dashboard</button></a>
+    <button onclick="logout()">Logout</button>
+
+    <!-- jQuery (Ensure this is included first) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            fetchStudents(); // Fetch and display students on page load
+            fetchCourses(); // Populate course dropdown
+        });
+    </script>
+</body>

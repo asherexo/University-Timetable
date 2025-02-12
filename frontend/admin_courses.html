@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Course & Subject Management </title>
+    
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Admin Panel - Course & Subject Management</h2>
+    
+    <!-- Add New Course -->
+    <h3>Add New Course</h3>
+    <div>
+        <label for="courseCode">Course Code:</label>
+        <input type="text" id="courseCode" placeholder="E.g., CS101">
+        <label for="courseName">Course Name:</label>
+        <input type="text" id="courseName" placeholder="E.g., Computer Science">
+        <button onclick="addCourse()">Add Course</button>
+    </div>
+    
+    <!-- Add New Subject -->
+    <h3>Add New Subject</h3>
+    <div>
+        <label for="newSubjectName">Subject Name:</label>
+        <input type="text" id="newSubjectName" placeholder="Enter Subject Name">
+    </div>
+    <div>
+        <label for="newSubjectCode">Subject Code:</label>
+        <input type="text" id="newSubjectCode" placeholder="Enter Subject Code">
+    </div>
+    <div>
+        <label for="subjectCourseSelect">Course:</label>
+        <select id="subjectCourseSelect"></select>
+    </div>
+    <button onclick="addSubject()">Add Subject</button>
+
+    <h3>Manage Courses & Subjects</h3>
+    <table id="coursesTable" border="1">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted dynamically -->
+        </tbody>
+    </table>
+        
+    <a href="admin.html">
+     <button>Back to Dashboard</button>
+    </a>
+
+    <button onclick="logout()">Logout</button>
+
+    <!-- Link to JavaScript -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
