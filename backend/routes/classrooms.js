@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
 
-//Route to get available classrooms based on day and time slot
+// to get available classrooms on the basis of day and time slot
 router.get("/available-classrooms", authMiddleware, (req, res) => {
     const { day, time_slot } = req.query;
 

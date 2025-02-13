@@ -1,6 +1,6 @@
-const API_BASE_URL = "http://localhost:5500"; // Backend URL
+const API_BASE_URL = "http://localhost:5500"; 
 
-// LOGIN FUNCTION
+// function for loggin in
 function login() {
     $.ajax({
         url: API_BASE_URL + "/auth/login",
@@ -14,7 +14,7 @@ function login() {
             localStorage.setItem("token", response.token);
             localStorage.setItem("role", response.role);
         
-            // Store course_ids only for students
+            
             if (response.role === "student") {
                 localStorage.setItem("course_ids", JSON.stringify(response.course_ids));
             }
@@ -32,7 +32,7 @@ function login() {
     });
 }
 
-// REGISTER FUNCTION
+// function for registerr
 function register() {
     $.ajax({
         url: API_BASE_URL + "/auth/register",
@@ -53,7 +53,7 @@ function register() {
     });
 }
 
-// FETCH TIMETABLE FUNCTION
+// to fetch student's timetable
 function fetchTimetable() {
     let token = localStorage.getItem("token");
     console.log("Fetching Student Timetable...");
@@ -64,23 +64,23 @@ function fetchTimetable() {
         type: "GET",
         headers: { "Authorization": "Bearer " + token },
         success: function(response) {
-            console.log("Timetable Data:", response); // Debugging log
+            console.log("Timetable Data:", response); 
 
             let weeklyTimetable = {}; 
             let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-            let listTimetableHTML = ""; // Store List View Data
+            let listTimetableHTML = ""; 
 
-            // Organize data for the weekly grid & list view
+            
             response.forEach(entry => {
                 let { subject_name, room_name, day, time_slot, course_name } = entry;
 
-                // Weekly Grid Population
+                
                 if (!weeklyTimetable[time_slot]) {
                     weeklyTimetable[time_slot] = { Monday: "-", Tuesday: "-", Wednesday: "-", Thursday: "-", Friday: "-" };
                 }
                 weeklyTimetable[time_slot][day] = `${subject_name} (${course_name}) - ${room_name}`;
 
-                // List View Population
+                
                 listTimetableHTML += `
                 <tr>
                     <td>${day}</td>
@@ -91,7 +91,7 @@ function fetchTimetable() {
                 </tr>`;
             });
 
-            // Sort time slots before displaying
+            
             let sortedTimeSlots = Object.keys(weeklyTimetable).sort((a, b) => {
                 let [startA] = a.split(" - ");
                 let [startB] = b.split(" - ");
@@ -102,7 +102,7 @@ function fetchTimetable() {
                 return hourA === hourB ? minA - minB : hourA - hourB;
             });
 
-            // Generate new weekly grid format
+            
             let weeklyHTML = sortedTimeSlots.map(time_slot => {
                 let row = `<tr><td>${time_slot}</td>`;
                 daysOfWeek.forEach(day => {
@@ -112,7 +112,7 @@ function fetchTimetable() {
                 return row;
             }).join("");
 
-            // Populate both views
+           
             $("#weeklyTimetableBody").html(weeklyHTML);
             $("#listTimetableBody").html(listTimetableHTML);
         },
@@ -123,7 +123,7 @@ function fetchTimetable() {
     });
 }
 
-// Fetch timetable when page loads
+
 $(document).ready(fetchTimetable);
 
 function downloadTimetable() {
@@ -135,7 +135,7 @@ function downloadTimetable() {
     a.click();
 }
 
-// LOGOUT FUNCTION
+
 function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -143,14 +143,14 @@ function logout() {
     window.location.href = "login.html";
 }
 
-// CALL FUNCTION ON PAGE LOAD
+
 $(document).ready(function() {
     if (window.location.pathname.includes("index.html")) {
         fetchTimetable();
     }
 });
 
-// FETCH TIMETABLE FOR ADMIN PANEL
+
 function fetchAdminTimetable() {
     let token = localStorage.getItem("token");
 
@@ -162,11 +162,11 @@ function fetchAdminTimetable() {
         type: "GET",
         headers: { "Authorization": "Bearer " + token },
         success: function(response) {
-            console.log("Timetable Data:", response); // Debugging log
+            console.log("Timetable Data:", response); 
 
             let groupedTimetable = {};
 
-            // Group timetable entries by course
+            
             response.forEach(entry => {
                 if (!groupedTimetable[entry.course_name]) {
                     groupedTimetable[entry.course_name] = [];
@@ -203,14 +203,14 @@ function fetchAdminTimetable() {
     });
 }
 
-// CALL FUNCTION ON PAGE LOAD
+
 $(document).ready(function() {
     if (window.location.pathname.includes("index.html")) {
         fetchTimetable();
     }
 });
 
-// ADD NEW TIMETABLE ENTRY
+
 function addTimetable() {
     let course_id = $("#timetableCourseSelect").val();
     let subject_id = $("#subjectSelect").val();
@@ -247,7 +247,7 @@ function addTimetable() {
     });
 }
 
-// DELETE TIMETABLE ENTRY
+
 function deleteTimetable(id) {
     $.ajax({
         url: `http://localhost:5500/timetable/${id}`,
@@ -265,7 +265,7 @@ function deleteTimetable(id) {
     });
 }
 
-// LOGOUT FUNCTION
+
 function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -273,7 +273,6 @@ function logout() {
     window.location.href = "login.html";
 }
 
-// CALL FUNCTION ON PAGE LOAD (Admin Only)
 $(document).ready(function() {
     if (window.location.pathname.includes("admin_timetable.html")) {
         let role = localStorage.getItem("role");
@@ -286,20 +285,19 @@ $(document).ready(function() {
     }
 });
 
-// FETCH STUDENTS LIST
 function fetchStudents() {
     $.ajax({
         url: "http://localhost:5500/admin/students",
         type: "GET",
         headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
         success: function(response) {
-            $("#students-data").empty(); // Clear previous data
-            $("#studentSelect").empty(); // Clear dropdown
+            $("#students-data").empty(); 
+            $("#studentSelect").empty(); 
 
-            let studentIds = new Set(); // To track unique student IDs
+            let studentIds = new Set(); 
 
             let studentRows = response.map(student => {
-                if (studentIds.has(student.id)) return ''; // Prevent duplicate students
+                if (studentIds.has(student.id)) return ''; 
                 studentIds.add(student.id);
 
                 return `
@@ -323,7 +321,6 @@ function fetchStudents() {
 
             $("#studentSelect").html(studentOptions);
 
-            // Fetch assigned courses
             studentIds.forEach(studentId => fetchAssignedCourses(studentId));
         },
         error: function(err) {
@@ -333,7 +330,7 @@ function fetchStudents() {
 }
 
 
-// to delete a student
+
 function deleteStudent(student_id) {
     if (!confirm("Are you sure you want to delete this student?")) return;
 
@@ -343,7 +340,7 @@ function deleteStudent(student_id) {
         headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
         success: function(response) {
             alert("Student deleted successfully!");
-            fetchStudents(); // Refresh student list after deletion
+            fetchStudents(); 
         },
         error: function(err) {
             console.error("Error deleting student:", err);
@@ -352,7 +349,6 @@ function deleteStudent(student_id) {
     });
 }
 
-// Add a new course
 function addCourse() {
     let code = $("#courseCode").val().trim();
     let name = $("#courseName").val().trim();
@@ -374,7 +370,7 @@ function addCourse() {
         data: JSON.stringify({ code, name }),
         success: function (response) {
             alert("Course added successfully!");
-            fetchCourses(); // Refresh the course list
+            fetchCourses(); 
         },
         error: function (err) {
             console.error("Error adding course:", err);
@@ -383,7 +379,7 @@ function addCourse() {
     });
 }
 
-// FETCH COURSES LIST
+
 function fetchCourses() {
     $.ajax({
         url: "http://localhost:5500/courses",
@@ -396,10 +392,10 @@ function fetchCourses() {
                 `<option value="${course.id}">${course.name}</option>`
             ).join("");
 
-           // Populate both dropdowns correctly
-           $("#courseSelect").html(courseOptions);  // Assign Courses
-           $("#timetableCourseSelect").html(courseOptions); // Add Timetable Entry
-           $("#subjectCourseSelect").html(courseOptions); // Add New Subject
+           
+           $("#courseSelect").html(courseOptions);  
+           $("#timetableCourseSelect").html(courseOptions);
+           $("#subjectCourseSelect").html(courseOptions);
         },
         error: function (err) {
             console.error("Error fetching courses:", err);
@@ -425,7 +421,7 @@ function assignCourses() {
         data: JSON.stringify({ student_id, course_id }),
         success: function(response) {
             alert("Course assigned successfully!");
-            fetchStudents(); // Refresh student list to show updated courses
+            fetchStudents();
         },
         error: function(err) {
             console.error("Error assigning course:", err);
@@ -434,7 +430,7 @@ function assignCourses() {
     });
 }
 
-// to fetch assigned courses in the table
+
 function fetchAssignedCourses(studentId) {
     $.ajax({
         url: `http://localhost:5500/admin/student-courses?student_id=${studentId}`,
@@ -442,7 +438,7 @@ function fetchAssignedCourses(studentId) {
         headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
         success: function(response) {
             if (response.length > 0) {
-                let uniqueCourses = [...new Set(response.map(course => course.name))]; // Remove duplicates
+                let uniqueCourses = [...new Set(response.map(course => course.name))];
                 $(`#courses-${studentId}`).text(uniqueCourses.join(", "));
             } else {
                 $(`#courses-${studentId}`).text("No Courses Assigned");
@@ -499,7 +495,7 @@ function addSubject() {
             alert("Subject added successfully!");
             $("#newSubjectName").val("");
             $("#newSubjectCode").val("");
-            fetchSubjects(); // Refresh subject list
+            fetchSubjects();
         },
         error: function (err) {
             alert("Error adding subject: " + err.responseJSON.error);
@@ -507,7 +503,6 @@ function addSubject() {
     });
 }
 
-// to fetch courses with its subs
 function fetchCoursesWithSubjects() {
     $.ajax({
         url: "http://localhost:5500/admin/courses-with-subjects",
@@ -517,9 +512,9 @@ function fetchCoursesWithSubjects() {
             let tableContent = "";
             
             response.forEach(course => {
-                let courseRowSpan = course.subjects.length || 1; // Span multiple rows if there are subjects
+                let courseRowSpan = course.subjects.length || 1;
                 
-                // First row for the course
+                
                 tableContent += `
                     <tr>
                         <td rowspan="${courseRowSpan}">${course.course_code}</td>
@@ -527,7 +522,7 @@ function fetchCoursesWithSubjects() {
                 `;
 
                 if (course.subjects.length > 0) {
-                    // Add first subject in the same row
+                    
                     tableContent += `
                         <td>${course.subjects[0].subject_code}</td>
                         <td>${course.subjects[0].subject_name}</td>
@@ -537,7 +532,6 @@ function fetchCoursesWithSubjects() {
                     </tr>
                     `;
 
-                    // Additional subjects in separate rows
                     for (let i = 1; i < course.subjects.length; i++) {
                         tableContent += `
                             <tr>
@@ -550,7 +544,7 @@ function fetchCoursesWithSubjects() {
                         `;
                     }
                 } else {
-                    // If no subjects, add delete course button
+                   
                     tableContent += `
                         <td colspan="2">No Subjects Assigned</td>
                         <td>
@@ -569,7 +563,6 @@ function fetchCoursesWithSubjects() {
     });
 }
 
-// to delete a sub
 function deleteSubject(subjectId) {
     if (!confirm("Are you sure you want to delete this subject?")) return;
 
@@ -579,7 +572,7 @@ function deleteSubject(subjectId) {
         headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
         success: function () {
             alert("Subject deleted successfully!");
-            fetchCoursesWithSubjects();  // Refresh the table
+            fetchCoursesWithSubjects();
         },
         error: function (err) {
             console.error("Error deleting subject:", err);
@@ -587,7 +580,6 @@ function deleteSubject(subjectId) {
     });
 }
 
-// to delete a course completely
 function deleteCourse(courseId) {
     if (!confirm("Are you sure you want to delete this course and all its subjects?")) return;
 
@@ -597,7 +589,7 @@ function deleteCourse(courseId) {
         headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
         success: function () {
             alert("Course and its subjects deleted successfully!");
-            fetchCoursesWithSubjects();  // Refresh the table
+            fetchCoursesWithSubjects(); 
         },
         error: function (err) {
             console.error("Error deleting course:", err);
@@ -609,7 +601,7 @@ function fetchAvailableClassrooms() {
     let day = $("#daySelect").val();
     let time_slot = $("#timeSlot").val();
 
-    console.log("Fetching available classrooms for:", { day, time_slot }); // Debugging Log
+    console.log("Fetching available classrooms for:", { day, time_slot }); 
 
     if (!day || !time_slot) {
         console.error("Day and time slot are missing!");
@@ -630,12 +622,10 @@ function fetchAvailableClassrooms() {
     });
 }
 
-// Call this function when day/time changes
 $("#daySelect, #timeSlotInput").on("change", fetchAvailableClassrooms);
 
 
 
-// PAGE LOAD INITIALIZATION
 $(document).ready(function() {
     let role = localStorage.getItem("role");
 

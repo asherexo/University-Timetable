@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-// REGISTER API
+// main register, to send register api
 router.post('/register', async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -14,7 +14,6 @@ router.post('/register', async (req, res) => {
         return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Hash the password before storing
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
@@ -26,7 +25,7 @@ router.post('/register', async (req, res) => {
     });
 });
 
-// LOGIN API
+// main login, for login api 
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
 
@@ -49,7 +48,7 @@ router.post('/login', (req, res) => {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // Generate a JWT token
+        // to Generate a JWT token
         if (user.role === "student") {
             db.query("SELECT course_id FROM student_courses WHERE student_id = ?", [user.id], (err, courses) => {
                 if (err) return res.status(500).json({ error: err.message });

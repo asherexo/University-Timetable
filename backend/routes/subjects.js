@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
 
-// GET /subjects?course_id=1
+// to get subjects with their course ids
 router.get("/", authMiddleware, (req, res) => {
     const { course_id } = req.query;
 
@@ -20,7 +20,7 @@ router.get("/", authMiddleware, (req, res) => {
     });
 });
 
-// POST /subjects
+// to post the subjects
 router.post("/", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -32,7 +32,7 @@ router.post("/", authMiddleware, (req, res) => {
         return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Ensure subject code is unique
+    
     const checkQuery = "SELECT * FROM subjects WHERE code = ?";
     db.query(checkQuery, [code], (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -41,7 +41,7 @@ router.post("/", authMiddleware, (req, res) => {
             return res.status(400).json({ error: "Subject code must be unique" });
         }
 
-        // Insert the new subject
+        
         const insertQuery = "INSERT INTO subjects (name, code, course_id) VALUES (?, ?, ?)";
         db.query(insertQuery, [name, code, course_id], (err, result) => {
             if (err) return res.status(500).json({ error: err.message });

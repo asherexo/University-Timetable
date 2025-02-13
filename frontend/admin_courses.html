@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel | Course & Subject Management</title>
     
-    <!-- Link to CSS -->
+    
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- jQuery CDN -->
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
     <h1>Admin Panel - Course & Subject Management</h1>
 
-    <!-- Add New Course -->
+    
     <h3>Add New Course</h3>
     <div>
         <label for="courseCode">Course Code:</label>
@@ -29,7 +29,7 @@
 
     <hr>
 
-    <!-- Add New Subject -->
+    
     <h3>Add New Subject</h3>
     <div>
         <label for="newSubjectName">Subject Name:</label>
@@ -47,7 +47,7 @@
 
     <hr>
 
-    <!-- Manage Courses & Subjects -->
+    
     <h3>Manage Courses & Subjects</h3>
     <table id="coursesTable" border="1">
         <thead>
@@ -60,27 +60,26 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Data will be inserted dynamically -->
+            
         </tbody>
     </table>
 
     <hr>
+    <br>
 
-    <!-- Navigation -->
     <a href="admin.html">
         <button>⬅️ Back to Dashboard</button>
     </a>
 
     <button onclick="logout()">🚪 Logout</button>
 
-    <!-- Link to JavaScript -->
     <script src="js/main.js"></script>
 
     <script>
         $(document).ready(function () {
             console.log("Admin Courses Page Loaded");
-            fetchCourses(); // Fetch courses dynamically
-            fetchSubjects(); // Fetch subjects dynamically
+            fetchCourses(); 
+            fetchSubjects(); 
         });
     </script>
 

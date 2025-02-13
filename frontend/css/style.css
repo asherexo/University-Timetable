@@ -1,27 +1,25 @@
-/* Import Google Fonts for Vintage Aesthetic */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
 
-/* Root Variables for Consistent Theme */
 :root {
-    --background: #F3EDE4; /* Soft parchment */
-    --text-color: #3D2C2E; /* Deep brown */
-    --accent: #A67B5B; /* Vintage muted brown */
-    --button-bg: #5C4033; /* Dark academia brown */
+    --background: #F3EDE4; 
+    --text-color: #3D2C2E; 
+    --accent: #A67B5B; 
+    --button-bg: #5C4033; 
     --button-hover: #3F2A22;
-    --table-header: #D8C3A5; /* Soft vintage tan */
+    --table-header: #D8C3A5;
     --table-row: #F8F1E5;
     --border-radius: 12px;
     --shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Universal Reset */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body Styling */
+
 body {
     font-family: 'EB Garamond', serif;
     background-color: var(--background);
@@ -30,7 +28,7 @@ body {
     padding: 20px;
 }
 
-/* Main Container */
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -40,14 +38,13 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Headings */
 h1, h2, h3 {
     font-weight: 700;
     color: var(--text-color);
     margin-bottom: 12px;
 }
 
-/* Buttons */
+
 button {
     background-color: var(--button-bg);
     color: white;
@@ -64,7 +61,6 @@ button:hover {
     background-color: var(--button-hover);
 }
 
-/* Form Inputs */
 input, select {
     width: 100%;
     padding: 10px;
@@ -75,7 +71,6 @@ input, select {
     font-family: 'Inter', sans-serif;
 }
 
-/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -98,12 +93,10 @@ td {
     border-bottom: 1px solid #C1A78E;
 }
 
-/* Hover Effects */
 tr:hover {
     background: #EEE6DA;
 }
 
-/* Footer */
 footer {
     margin-top: 20px;
     text-align: center;

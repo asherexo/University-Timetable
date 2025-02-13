@@ -4,10 +4,7 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-/**
- * GET /courses - Fetch all available courses
- * This route is open for both students and admins
- */
+// to fetch all courses
 router.get('/', authMiddleware, (req, res) => {
     db.query("SELECT id, code, name FROM courses", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -15,9 +12,7 @@ router.get('/', authMiddleware, (req, res) => {
     });
 });
 
-/**
- * POST /courses - Add a new course (Admin only)
- */
+// to add a new course for admin only 
 router.post('/', authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
