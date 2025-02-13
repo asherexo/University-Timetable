@@ -13,45 +13,60 @@
 </head>
 <body>
 
-    <h2>Admin Panel - Manage Timetable</h2>
-    
+    <h1>Admin Panel - Manage Timetable</h1>
+
+    <hr>
+
     <!-- Add New Timetable Entry -->
     <h2>Add Timetable Entry</h2>
-    <div>
+
+    <fieldset>
+        <legend>📅 Select Course & Subject</legend>
         <label for="timetableCourseSelect">Course:</label>
-        <select id="timetableCourseSelect" onchange="fetchSubjects()"></select>
-    </div>
-    <div>
+        <select id="timetableCourseSelect" onchange="fetchSubjects()">
+            <option value="" disabled selected>Select a Course</option>
+        </select>
+
         <label for="subjectSelect">Subject:</label>
-        <select id="subjectSelect"></select>
-    </div>
-    <div>
+        <select id="subjectSelect">
+            <option value="" disabled selected>Select a Subject</option>
+        </select>
+    </fieldset>
+
+    <fieldset>
+        <legend>⏳ Select Day & Time</legend>
         <label for="daySelect">Day:</label>
         <select id="daySelect" onchange="fetchAvailableClassrooms()">
+            <option value="" disabled selected>Select a Day</option>
             <option value="Monday">Monday</option>
             <option value="Tuesday">Tuesday</option>
             <option value="Wednesday">Wednesday</option>
             <option value="Thursday">Thursday</option>
             <option value="Friday">Friday</option>
         </select>
-    </div>
-    <div>
+
         <label for="timeSlot">Time Slot:</label>
-        <input type="text" id="timeSlot" placeholder="e.g., 10:00-12:00" onchange="fetchAvailableClassrooms()">
-    </div>
-    <div>
+        <input type="text" id="timeSlot" placeholder="E.g., 10:00-12:00" onchange="fetchAvailableClassrooms()">
+    </fieldset>
+
+    <fieldset>
+        <legend>🏫 Select Classroom</legend>
         <label for="classroomSelect">Classroom:</label>
         <select id="classroomSelect">
+            <option value="" disabled selected>Select a Classroom</option>
             <option value="1">Classroom 1</option>
             <option value="2">Classroom 2</option>
             <option value="3">Classroom 3</option>
         </select>
-    </div>
-    <button onclick="addTimetable()">Add Entry</button>
+    </fieldset>
+
+    <button onclick="addTimetable()">➕ Add Entry</button>
+
+    <hr>
 
     <!-- Display Timetable -->
-    <h3>Current Timetable</h3>
-    <table id="timetable" ; border="1">
+    <h2>Current Timetable</h2>
+    <table id="timetable" border="1">
         <thead>
             <tr>
                 <th>Course</th>
@@ -67,13 +82,15 @@
         </tbody>
     </table>
 
-    <a href="admin.html">
-        <button>Back to Dashboard</button>
-    </a>
-    
-    <button onclick="logout()">Logout</button>
+    <hr>
 
-    <!-- Link to JavaScript -->
+    <!-- Navigation -->
+    <a href="admin.html">
+        <button>⬅️ Back to Dashboard</button>
+    </a>
+    <button onclick="logout()">🚪 Logout</button>
+
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
 
 </body>

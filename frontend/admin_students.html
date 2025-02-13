@@ -1,4 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Manage Students</title>
+
+    <!-- Link to CSS (Will style later) -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
+
     <h1>Admin Panel - Manage Students</h1>
 
     <!-- Student List -->
@@ -9,14 +23,16 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Assigned Courses</th>
+                <th>Assigned Course</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody id="students-data">
-            <!-- Data will be inserted here -->
+            <tr><td colspan="5" style="text-align: center;">Loading students...</td></tr>
         </tbody>
     </table>
+
+    <hr>
 
     <!-- Assign Courses to Student -->
     <h3>Assign Course to Student</h3>
@@ -26,23 +42,26 @@
     <label for="courseSelect">Select Course:</label>
     <select id="courseSelect"></select>
 
-    <button onclick="assignCourses()">Assign Course</button>
+    <button onclick="assignCourses()">✅ Assign Course</button>
 
-    <!-- Back and Logout Buttons -->
-    <br><br>
-    <a href="admin.html"><button>Back to Dashboard</button></a>
-    <button onclick="logout()">Logout</button>
+    <br>
+    <hr>
+    <br>
 
-    <!-- jQuery (Ensure this is included first) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Navigation Buttons -->
+    <button onclick="window.location.href='admin.html'">⬅️ Back to Dashboard</button>
+    <button onclick="logout()">🚪 Logout</button>
 
-    <!-- Main JavaScript -->
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
 
     <script>
         $(document).ready(function () {
-            fetchStudents(); // Fetch and display students on page load
-            fetchCourses(); // Populate course dropdown
+            console.log("Admin Students Page Loaded");
+            fetchStudents();
+            fetchCourses();
         });
     </script>
+
 </body>
+</html>

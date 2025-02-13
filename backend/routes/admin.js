@@ -4,9 +4,7 @@ const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
 
-/**
- * ✅ GET /admin/students - Fetch all registered students
- */
+// for fetching all the registered students
 router.get("/students", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -26,9 +24,7 @@ router.get("/students", authMiddleware, (req, res) => {
     });
 });
 
-/**
- * POST /admin/assign-courses - Assign courses to students
- */
+//for assigning thne course
 router.post("/assign-course", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -40,20 +36,19 @@ router.post("/assign-course", authMiddleware, (req, res) => {
         return res.status(400).json({ error: "Student ID and Course ID are required" });
     }
 
-    // Check if the student already has a course assigned
+    
     const checkQuery = "SELECT * FROM student_courses WHERE student_id = ?";
     db.query(checkQuery, [student_id], (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
 
         if (results.length > 0) {
-            // Student already has a course assigned, update it
+           
             const updateQuery = "UPDATE student_courses SET course_id = ? WHERE student_id = ?";
             db.query(updateQuery, [course_id, student_id], (updateErr, updateResult) => {
                 if (updateErr) return res.status(500).json({ error: updateErr.message });
                 res.json({ message: "Course updated successfully" });
             });
         } else {
-            // Student does not have a course assigned, insert new assignment
             const insertQuery = "INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)";
             db.query(insertQuery, [student_id, course_id], (insertErr, insertResult) => {
                 if (insertErr) return res.status(500).json({ error: insertErr.message });
@@ -63,9 +58,7 @@ router.post("/assign-course", authMiddleware, (req, res) => {
     });
 });
 
-/**
- * ✅ PUT /admin/students/:id - Update student details (name, email)
- */
+// for updating student details 
 router.put("/students/:id", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -86,9 +79,7 @@ router.put("/students/:id", authMiddleware, (req, res) => {
     });
 });
 
-/**
- * ✅ PUT /admin/students/:id/assign-course - Assign or Update a Student’s Course
- */
+// to update student course
 router.put("/students/:id/assign-course", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -101,12 +92,12 @@ router.put("/students/:id/assign-course", authMiddleware, (req, res) => {
         return res.status(400).json({ error: "Course ID is required" });
     }
 
-    // Remove existing course assignment first
+    
     const deleteQuery = "DELETE FROM student_courses WHERE student_id = ?";
     db.query(deleteQuery, [studentId], (err) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        // Insert new course assignment
+        
         const insertQuery = "INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)";
         db.query(insertQuery, [studentId, course_id], (err, result) => {
             if (err) return res.status(500).json({ error: err.message });
@@ -115,9 +106,7 @@ router.put("/students/:id/assign-course", authMiddleware, (req, res) => {
     });
 });
 
-/**
- * ✅ DELETE /admin/students/:id - Delete a Student Account
- */
+// for deleting students acounnt
 router.delete("/students/:id", authMiddleware, (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access Denied: Admins only" });
@@ -215,12 +204,11 @@ router.delete("/courses/:course_id", authMiddleware, (req, res) => {
 
     const { course_id } = req.params;
     
-    // First, delete subjects related to this course
+    
     const deleteSubjectsQuery = "DELETE FROM subjects WHERE course_id = ?";
     db.query(deleteSubjectsQuery, [course_id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        // Then, delete the course
         const deleteCourseQuery = "DELETE FROM courses WHERE id = ?";
         db.query(deleteCourseQuery, [course_id], (err) => {
             if (err) return res.status(500).json({ error: err.message });
@@ -229,5 +217,7 @@ router.delete("/courses/:course_id", authMiddleware, (req, res) => {
         });
     });
 });
+
+
 
 module.exports = router;

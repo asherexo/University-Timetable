@@ -66,42 +66,73 @@ function fetchTimetable() {
         success: function(response) {
             console.log("Timetable Data:", response); // Debugging log
 
-            let groupedTimetable = {};
+            let weeklyTimetable = {}; 
+            let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+            let listTimetableHTML = ""; // Store List View Data
 
-            // Group timetable entries by course
+            // Organize data for the weekly grid & list view
             response.forEach(entry => {
-                if (!groupedTimetable[entry.course_name]) {
-                    groupedTimetable[entry.course_name] = [];
+                let { subject_name, room_name, day, time_slot, course_name } = entry;
+
+                // Weekly Grid Population
+                if (!weeklyTimetable[time_slot]) {
+                    weeklyTimetable[time_slot] = { Monday: "-", Tuesday: "-", Wednesday: "-", Thursday: "-", Friday: "-" };
                 }
-                groupedTimetable[entry.course_name].push(entry);
-            });
+                weeklyTimetable[time_slot][day] = `${subject_name} (${course_name}) - ${room_name}`;
 
-            let timetableHTML = "";
-            
-            Object.keys(groupedTimetable).forEach(course_name => {
-                timetableHTML += `
+                // List View Population
+                listTimetableHTML += `
                 <tr>
-                    <td rowspan="${groupedTimetable[course_name].length + 1}" style="font-weight: bold;">${course_name}</td>
+                    <td>${day}</td>
+                    <td>${time_slot}</td>
+                    <td>${course_name}</td>
+                    <td>${subject_name}</td>
+                    <td>${room_name}</td>
                 </tr>`;
-
-                groupedTimetable[course_name].forEach(entry => {
-                    timetableHTML += `
-                    <tr>
-                        <td>${entry.subject_name}</td>
-                        <td>${entry.room_name}</td>
-                        <td>${entry.day}</td>
-                        <td>${entry.time_slot}</td>
-                    </tr>`;
-                });
             });
 
-            $("#timetable-data").html(timetableHTML);
+            // Sort time slots before displaying
+            let sortedTimeSlots = Object.keys(weeklyTimetable).sort((a, b) => {
+                let [startA] = a.split(" - ");
+                let [startB] = b.split(" - ");
+
+                let [hourA, minA] = startA.split(":").map(Number);
+                let [hourB, minB] = startB.split(":").map(Number);
+
+                return hourA === hourB ? minA - minB : hourA - hourB;
+            });
+
+            // Generate new weekly grid format
+            let weeklyHTML = sortedTimeSlots.map(time_slot => {
+                let row = `<tr><td>${time_slot}</td>`;
+                daysOfWeek.forEach(day => {
+                    row += `<td>${weeklyTimetable[time_slot][day]}</td>`;
+                });
+                row += "</tr>";
+                return row;
+            }).join("");
+
+            // Populate both views
+            $("#weeklyTimetableBody").html(weeklyHTML);
+            $("#listTimetableBody").html(listTimetableHTML);
         },
         error: function(err) {
             console.error("Error fetching timetable:", err);
             alert("Failed to load timetable: " + (err.responseJSON ? err.responseJSON.error : "Unknown error"));
         }
     });
+}
+
+// Fetch timetable when page loads
+$(document).ready(fetchTimetable);
+
+function downloadTimetable() {
+    let timetableHTML = document.getElementById("timetable").outerHTML;
+    let blob = new Blob([timetableHTML], { type: "text/html" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "timetable.html";
+    a.click();
 }
 
 // LOGOUT FUNCTION

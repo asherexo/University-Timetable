@@ -13,27 +13,85 @@
 </head>
 <body>
 
-    <h2>Student Timetable</h2>
+    <h1>📅 Student's Weekly Timetable</h1>
+    <h3 id="weekRange">(Week: Loading...)</h3>
+
+    <!-- Toggle View Button -->
+    <button onclick="toggleView()">🔄 Switch View</button>
     
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Course</th>
-                <th>Subject</th>
-                <th>Classroom</th>
-                <th>Day</th>
-                <th>Time Slot</th>
-            </tr>
-        </thead>
-        <tbody id="timetable-data">
-            <!-- Timetable entries will be inserted here dynamically -->
-        </tbody>
-    </table>
+    <hr>
 
-    <button onclick="logout()">Logout</button>
+    <!-- Weekly Grid Timetable -->
+    <div id="weeklyView">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody id="weeklyTimetableBody">
+                <!-- Timetable data will be inserted dynamically -->
+            </tbody>
+        </table>
+    </div>
 
-    <!-- Link to JavaScript -->
+    <!-- List View Timetable (Hidden by Default) -->
+    <div id="listView" style="display: none;">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Time Slot</th>
+                    <th>Course</th>
+                    <th>Subject</th>
+                    <th>Classroom</th>
+                </tr>
+            </thead>
+            <tbody id="listTimetableBody">
+                <!-- Timetable data will be inserted dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <!-- Action Buttons -->
+    <button onclick="logout()">🚪 Logout</button>
+
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script>
+        function toggleView() {
+            let weeklyView = document.getElementById("weeklyView");
+            let listView = document.getElementById("listView");
+
+            if (weeklyView.style.display === "none") {
+                weeklyView.style.display = "block";
+                listView.style.display = "none";
+            } else {
+                weeklyView.style.display = "none";
+                listView.style.display = "block";
+            }
+        }
+
+        function updateWeekRange() {
+            let today = new Date();
+            let startOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 1));
+            let endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 5));
+
+            let startFormatted = startOfWeek.toLocaleDateString();
+            let endFormatted = endOfWeek.toLocaleDateString();
+
+            document.getElementById("weekRange").innerText = `(Week: ${startFormatted} - ${endFormatted})`;
+        }
+
+        updateWeekRange();
+    </script>
 
 </body>
 </html>

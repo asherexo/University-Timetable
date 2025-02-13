@@ -4,21 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | University Timetable</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">  <!-- CSS to be added later -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Enter your email">
-    <input type="password" id="password" placeholder="Enter your password">
-    <button onclick="login()">Login</button>
+    <h1>University Timetable Portal</h1>
 
-    <h2>Register</h2>
-    <input type="text" id="name" placeholder="Full Name">
-    <input type="email" id="reg_email" placeholder="Enter your email">
-    <input type="password" id="reg_password" placeholder="Enter your password">
-    <button onclick="register()">Register</button>
+    <!-- Login Section -->
+    <fieldset>
+        <legend><strong>Login</strong></legend>
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <button onclick="login()">Login</button>
+    </fieldset>
+
+    <hr> <!-- Separates Login & Register sections -->
+
+    <!-- Register Section -->
+    <fieldset>
+        <legend><strong>Register</strong></legend>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" placeholder="Full Name" required>
+
+        <label for="reg_email">Email:</label>
+        <input type="email" id="reg_email" placeholder="Enter your email" required>
+
+        <label for="reg_password">Password:</label>
+        <input type="password" id="reg_password" placeholder="Enter your password" required>
+
+        <button onclick="register()">Register</button>
+    </fieldset>
 
     <script src="js/main.js"></script>
 

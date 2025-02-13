@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Course & Subject Management </title>
+    <title>Admin Panel | Course & Subject Management</title>
     
     <!-- Link to CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -13,18 +13,22 @@
 </head>
 <body>
 
-    <h2>Admin Panel - Course & Subject Management</h2>
-    
+    <h1>Admin Panel - Course & Subject Management</h1>
+
     <!-- Add New Course -->
     <h3>Add New Course</h3>
     <div>
         <label for="courseCode">Course Code:</label>
         <input type="text" id="courseCode" placeholder="E.g., CS101">
+        
         <label for="courseName">Course Name:</label>
         <input type="text" id="courseName" placeholder="E.g., Computer Science">
-        <button onclick="addCourse()">Add Course</button>
+        
+        <button onclick="addCourse()">➕ Add Course</button>
     </div>
-    
+
+    <hr>
+
     <!-- Add New Subject -->
     <h3>Add New Subject</h3>
     <div>
@@ -39,8 +43,11 @@
         <label for="subjectCourseSelect">Course:</label>
         <select id="subjectCourseSelect"></select>
     </div>
-    <button onclick="addSubject()">Add Subject</button>
+    <button onclick="addSubject()">➕ Add Subject</button>
 
+    <hr>
+
+    <!-- Manage Courses & Subjects -->
     <h3>Manage Courses & Subjects</h3>
     <table id="coursesTable" border="1">
         <thead>
@@ -56,15 +63,26 @@
             <!-- Data will be inserted dynamically -->
         </tbody>
     </table>
-        
+
+    <hr>
+
+    <!-- Navigation -->
     <a href="admin.html">
-     <button>Back to Dashboard</button>
+        <button>⬅️ Back to Dashboard</button>
     </a>
 
-    <button onclick="logout()">Logout</button>
+    <button onclick="logout()">🚪 Logout</button>
 
     <!-- Link to JavaScript -->
     <script src="js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            console.log("Admin Courses Page Loaded");
+            fetchCourses(); // Fetch courses dynamically
+            fetchSubjects(); // Fetch subjects dynamically
+        });
+    </script>
 
 </body>
 </html>
